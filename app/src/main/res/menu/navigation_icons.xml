@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <group
+            android:id="@+id/logic"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/home"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="@string/home"/>
+            <item
+                android:id="@+id/plus_ou_moine"
+                android:icon="@mipmap/ic_sup_et_inf_round"
+                android:title="@string/plus_ou_moins"/>
+
+            <item
+                android:id="@+id/egale"
+                android:icon="@mipmap/ic_egal_ou_de_round"
+                android:title="@string/egale_ou_deferent"/>
+        </group>
+        <group
+            android:id="@+id/operation">
+            <item
+                android:id="@+id/fois"
+                android:icon="@drawable/fois1"
+                android:title="@string/fois"/>
+            <item
+                android:id="@+id/division"
+                android:icon="@drawable/devision"
+                android:title="@string/division"/>
+            <item
+                android:id="@+id/somme"
+                android:icon="@drawable/pluse"
+                android:title="@string/somme"/>
+            <item
+                android:id="@+id/soustraction"
+                android:icon="@drawable/soustraction"
+                android:title="@string/soustraction"/>
+        </group>
+        <group
+            android:id="@+id/group2"
+            android:checkableBehavior="single">
+            <item
+                android:id="@+id/cantact"
+                android:icon="@drawable/cantact_us"
+                android:title="@string/contact_us"/>
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_settings_24"
+                android:title="@string/setting"/>
+        </group>
+</menu>

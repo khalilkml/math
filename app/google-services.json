@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "472737127369",
+    "firebase_url": "https://math-58bbf-default-rtdb.firebaseio.com",
+    "project_id": "math-58bbf",
+    "storage_bucket": "math-58bbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472737127369:android:cc86f6cb2f0875ccde6618",
+        "android_client_info": {
+          "package_name": "com.example.math"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472737127369-19ab9ukrod43ifvlggc1biaqqk8st09h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbIA2sfwUdrZFBNrKj01Rlg5wMub3foDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472737127369-19ab9ukrod43ifvlggc1biaqqk8st09h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472737127369:android:a0ac92423f6c28d5de6618",
+        "android_client_info": {
+          "package_name": "com.exemple.math"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472737127369-19ab9ukrod43ifvlggc1biaqqk8st09h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbIA2sfwUdrZFBNrKj01Rlg5wMub3foDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472737127369-19ab9ukrod43ifvlggc1biaqqk8st09h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
