@@ -64,12 +64,10 @@ public class Login extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(Semail, Spassword).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    System.out.println("first if");
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(this, "login successfully ", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Login.this, MainActivity.class));
                 } else {
-                    System.out.println("else ");
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "" + task.getException(), Toast.LENGTH_LONG).show();
                 }

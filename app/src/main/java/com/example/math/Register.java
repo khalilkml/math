@@ -73,7 +73,7 @@ public class Register extends AppCompatActivity {
         } else if (SSpassword.isEmpty() || SSpassword.length() < 6) {
             password.setError("password is required and it has to be more than 6 characters");
             password.requestFocus();
-        } else if (SSconfirm_password.isEmpty()) {
+        } else if (SSconfirm_password.isEmpty()||!(SSconfirm_password.matches(SSpassword))) {
             confirm_password.setError("email is required and it has to be the same as the password");
             confirm_password.requestFocus();
         } else {
@@ -87,7 +87,7 @@ public class Register extends AppCompatActivity {
                                     .setValue(user).addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()) {
                                             progressBar.setVisibility(View.GONE);
-                                            Log.d(TAG, "Successfully signed in with email link!");
+                                            Toast.makeText(this, "Registered successful", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(Register.this, MainActivity.class));
                                         } else {
                                             progressBar.setVisibility(View.GONE);
