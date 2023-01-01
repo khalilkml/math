@@ -44,4 +44,8 @@
     <string name="Class">Class</string>
     <string name="save">Save</string>
     <string name="already_have_account">Already have account</string>
+    <string name="first_name">first name</string>
+    <string name="second_name">second name</string>
+    <string name="creat_account">creat account</string>
+    <string name="forget_password">forget password?</string>
 </resources>
