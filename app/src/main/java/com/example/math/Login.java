@@ -1,5 +1,6 @@
 package com.example.math;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -21,18 +22,21 @@ public class Login extends AppCompatActivity {
     EditText password;
     TextView creat_account;
     TextView forget_password;
+    TextView check;
     Button login;
     ImageView google;
     ImageView fb;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        check = findViewById(R.id.check);
         forget_password = findViewById(R.id.btn_forget);
         google = findViewById(R.id.google);
         fb = findViewById(R.id.fb);
@@ -47,6 +51,7 @@ public class Login extends AppCompatActivity {
         creat_account.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
     }
 
+    @SuppressLint("SetTextI18n")
     private void login() {
         String Semail = email.getText().toString().trim();
         String Spassword = password.getText().toString().trim();
@@ -55,10 +60,10 @@ public class Login extends AppCompatActivity {
             email.setError("email is required");
             email.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(Semail).matches()) {
-            password.setError("enter a valid email");
-            password.requestFocus();
+            email.setError("enter a valid email");
+            email.requestFocus();
         } else if (Spassword.isEmpty()) {
-            password.setError("class is required");
+            password.setError("password is required");
             password.requestFocus();
         } else {
             progressBar.setVisibility(View.VISIBLE);
@@ -67,6 +72,7 @@ public class Login extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(this, "login successfully ", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Login.this, MainActivity.class));
+
                 } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "" + task.getException(), Toast.LENGTH_LONG).show();

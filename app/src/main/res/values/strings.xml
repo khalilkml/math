@@ -49,4 +49,11 @@
     <string name="creat_account">creat account</string>
     <string name="forget_password">forget password?</string>
     <string name="create_account">create_account</string>
+    <string name="check_your_email_to_verify_it">check your email to verify it!</string>
+    <string name="genie">Genie</string>
+    <string name="facebook_app_id">876049090383180</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+    <string name="light_mode">Light Mode</string>
+    <string name="dark_mode">Dark_mode</string>
 </resources>
