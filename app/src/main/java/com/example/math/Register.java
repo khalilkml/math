@@ -56,7 +56,7 @@ public class Register extends AppCompatActivity {
 
     CallbackManager callbackManager;
 
-    int score=0;
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class Register extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        startActivity(new Intent(Register.this,MainActivity.class));
+                        startActivity(new Intent(Register.this, MainActivity.class));
                         finish();
                     }
 
@@ -108,6 +108,7 @@ public class Register extends AppCompatActivity {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,7 +139,7 @@ public class Register extends AppCompatActivity {
         String SSconfirm_password = confirm_password.getText().toString();
 
         if (SSfull_name.isEmpty()) {
-            full_name.setError("full name is required");
+            full_name.setError("Full name is required!");
             full_name.requestFocus();
         } else if (SSclasse.isEmpty()) {
             classe.setError("class is required");
@@ -160,7 +161,7 @@ public class Register extends AppCompatActivity {
             client.put("Classe", SSclasse);
             client.put("Email", SSemail);
             client.put("Password", SSpassword);
-            client.put("Score",score);
+            client.put("Score", score);
 
             mAuth.createUserWithEmailAndPassword(SSemail, SSpassword).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -176,33 +177,12 @@ public class Register extends AppCompatActivity {
                             .addOnFailureListener(e -> {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
-
-
                             });
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Failed to register! Check the connection!", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            /*mAuth.createUserWithEmailAndPassword(SSemail, SSpassword).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    User user = new User(SSfull_name, SSclasse, SSemail, SSpassword, SSconfirm_password);
-                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(task1 -> {
-                        if (task1.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(this, "Registered successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Register.this, MainActivity.class));
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(Register.this, "" + task1.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
-                }
-            });**/
         }
     }
 }
