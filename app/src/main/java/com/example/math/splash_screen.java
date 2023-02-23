@@ -19,7 +19,7 @@ public class splash_screen extends AppCompatActivity {
             SharedPreferences sharedPreferences= getSharedPreferences(Login.PREFS_NAME,0);
             boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn",false);
             Intent mainIntent;
-            //if hasLoggedIn boolean variable return if the user logged in
+            //if hasLoggedIn  is a boolean variable return if the user logged in or not
             if(hasLoggedIn){
                 //if true open the Main activity inside the app
                 mainIntent = new Intent(splash_screen.this, MainActivity.class);
@@ -29,6 +29,7 @@ public class splash_screen extends AppCompatActivity {
             }
             splash_screen.this.startActivity(mainIntent);
             splash_screen.this.finish();
+        // Handlin time of the splach screen
         }, SPLASH_DISPLAY_LENGTH);
     }
 }
