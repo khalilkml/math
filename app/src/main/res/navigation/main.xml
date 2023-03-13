@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.math.user_info"
+        android:name="com.example.math.Home"
         android:label="@string/USER_INFORMATIONS"
-        tools:layout="@layout/fragment_user_info" />
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/division"
         android:name="com.example.math.Devision"

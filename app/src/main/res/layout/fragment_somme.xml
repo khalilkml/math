@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Somme"/>
+    android:layout_height="match_parent">
+
+    <!-- To-Do List -->
+    <ListView
+        android:id="@+id/todoList"
+        android:layout_width="match_parent"
+        android:listSelector="@color/purple_200"
+        android:layout_height="560dp"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:paddingTop="55dp"
+        android:focusable="true" />
+
+    <!-- Add New To-Do -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/new_todo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#616161" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Add Button -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <!-- Add Button -->
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="80dp"
+            android:text="@string/add" />
+
+        <Button
+            android:id="@+id/remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="30dp"
+            android:text="@string/remove" />
+        <Button
+            android:id="@+id/change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="20dp"
+            android:text="@string/change" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/starte" />
+
+</LinearLayout>

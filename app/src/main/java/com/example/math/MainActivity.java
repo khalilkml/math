@@ -24,6 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar topAppBar;
+    NavController navController;
 
     public MainActivity() {
     }
@@ -40,23 +41,24 @@ public class MainActivity extends AppCompatActivity {
         final DrawerLayout navigation_icon =findViewById(R.id.drawerLayout);
         findViewById(R.id.navigation_up).setOnClickListener(view -> navigation_icon.openDrawer(GravityCompat.START));
 
-        NavigationView navigation_iconst =findViewById(R.id.navigation_icons);
-        navigation_iconst.setItemIconTintList(null);
+        NavigationView navigation_icons =findViewById(R.id.navigation_icons);
+        navigation_icons.setItemIconTintList(null);
 
-        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
-        NavigationUI.setupWithNavController(navigation_iconst ,navController);
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        NavigationUI.setupWithNavController(navigation_icons ,navController);
 
         final TextView textTitle = findViewById(R.id.layout_title);
 
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController Controller, @NonNull NavDestination destination, @Nullable Bundle bundle) {
-                textTitle.setText(destination.getLabel());
-            }
-        });
+        navController.addOnDestinationChangedListener((Controller, destination, bundle) -> textTitle.setText(destination.getLabel()));
+
+
+
 
     }
-
+    public void changeToFragment(int itemId) {
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        navController.navigate(itemId);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

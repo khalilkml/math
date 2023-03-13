@@ -90,20 +90,20 @@ public class Login extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(Semail, Spassword).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    if (user.isEmailVerified()) {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(this, "Login successfully!", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences = getSharedPreferences(Login.PREFS_NAME, 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("hasLoggedIn", true);
-                        editor.apply();
-                        startActivity(new Intent(Login.this, MainActivity.class));
-                        finish();
-                    } else {
-                        user.sendEmailVerification();
-                        check.setText("Check your email to verify it.");
-                        check.setTextColor(getResources().getColor(R.color.green));
-                    }
+                    //if (user.isEmailVerified()) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(this, "Login successfully!", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sharedPreferences = getSharedPreferences(Login.PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("hasLoggedIn", true);
+                    editor.apply();
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                /*} else {
+                    user.sendEmailVerification();
+                    check.setText("Check your email to verify it.");
+                    check.setTextColor(getResources().getColor(R.color.green));
+                    }*/
                 } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "" + task.getException(), Toast.LENGTH_LONG).show();
