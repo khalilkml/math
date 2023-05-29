@@ -1,19 +1,11 @@
 package com.example.math;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,9 +13,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 
 public class Somme extends Fragment {
+
 
     public TaskManager taskManager;
 
@@ -57,11 +54,15 @@ public class Somme extends Fragment {
             @Override
             public void onClick(View v) {
                 String task = taskInput.getText().toString().trim();
-                if (!task.isEmpty()) {
 
+                if (!task.isEmpty()) {
+                    //Returning the task from the editetext
                     taskManager.addTask(task);
+                    //Prepare to update the list of tasks
                     adapter.clear();
+                    //Update task list
                     adapter.addAll(taskManager.getTasks());
+                    //Clear the taskinput
                     taskInput.setText("");
                     Log.d("Somme Fragment", "Added task: " + task);
                 }
@@ -80,7 +81,7 @@ public class Somme extends Fragment {
                     Log.d("TaskManager", "Selected task: " + task);
                     adapter.remove(task);
                     taskList.clearChoices();
-                }else{
+                } else {
                     System.out.println("not");
                 }
             }
@@ -127,7 +128,7 @@ public class Somme extends Fragment {
                     builder.show();
                 } else {
                     // No item is selected in the list
-                    Toast.makeText(MainActivity.this, "Please select a task to change", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select a task to change", Toast.LENGTH_SHORT).show();
                 }
             }
         });

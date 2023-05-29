@@ -59,4 +59,8 @@ public class TaskManager {
     }
 
 
+    public void changeTask(String oldTask, String newTask) {
+        removeTask(oldTask);
+        addTask(newTask);
+    }
 }

@@ -1,7 +1,10 @@
 package com.example.math;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +27,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +70,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         full_name = findViewById(R.id.full_name);
-        classe = findViewById(R.id.classe);
         email = findViewById(R.id.email);
         fb = findViewById(R.id.fb);
         google = findViewById(R.id.google);
@@ -133,7 +138,6 @@ public class Register extends AppCompatActivity {
 
     private void Registration() {
         String SSfull_name = full_name.getText().toString();
-        String SSclasse = classe.getText().toString();
         String SSemail = email.getText().toString();
         String SSpassword = password.getText().toString();
         String SSconfirm_password = confirm_password.getText().toString();
@@ -141,9 +145,6 @@ public class Register extends AppCompatActivity {
         if (SSfull_name.isEmpty()) {
             full_name.setError("Full name is required!");
             full_name.requestFocus();
-        } else if (SSclasse.isEmpty()) {
-            classe.setError("class is required");
-            classe.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(SSemail).matches()) {
             email.setError("write a valid email");
             email.requestFocus();
@@ -158,7 +159,6 @@ public class Register extends AppCompatActivity {
             //FIRESTORE Create a new user
             Map<String, Object> client = new HashMap<>();
             client.put("Full name", SSfull_name);
-            client.put("Classe", SSclasse);
             client.put("Email", SSemail);
             client.put("Password", SSpassword);
             client.put("Score", score);
@@ -183,6 +183,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Failed to register! Check the connection!", Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
     }
 }
