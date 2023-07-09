@@ -56,7 +56,7 @@
     <string name="facebook_client_token">56789</string>
     <string name="light_mode">Light Mode</string>
     <string name="dark_mode">Dark_mode</string>
-    <string name="new_todo">new_todo</string>
+    <string name="new_todo">new task</string>
     <string name="add">add</string>
     <string name="starte">★</string>
     <string name="remove">remove</string>

@@ -6,9 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -20,15 +18,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar topAppBar;
-    NavController navController;
-
-    public MainActivity() {
-    }
-
+    private DrawerLayout drawerLayout;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +32,32 @@ public class MainActivity extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         setSupportActionBar(topAppBar);
 
-        final DrawerLayout navigation_icon =findViewById(R.id.drawerLayout);
-        findViewById(R.id.navigation_up).setOnClickListener(view -> navigation_icon.openDrawer(GravityCompat.START));
+        drawerLayout = findViewById(R.id.drawerLayout);
+        findViewById(R.id.navigation_up).setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
 
-        NavigationView navigation_icons =findViewById(R.id.navigation_icons);
-        navigation_icons.setItemIconTintList(null);
+        NavigationView navigationView = findViewById(R.id.navigation_icons);
+        navigationView.setItemIconTintList(null);
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
-        NavigationUI.setupWithNavController(navigation_icons ,navController);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
         final TextView textTitle = findViewById(R.id.layout_title);
 
-        navController.addOnDestinationChangedListener((Controller, destination, bundle) -> textTitle.setText(destination.getLabel()));
-
-
-
-
+        navController.addOnDestinationChangedListener((controller, destination, arguments) ->
+                textTitle.setText(destination.getLabel()));
     }
-    public void changeToFragment(int itemId) {
-        navController = Navigation.findNavController(this, R.id.navHostFragment);
-        navController.navigate(itemId);
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (!navController.popBackStack()) {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.top_app_bar, menu);
         return true;
     }
@@ -72,12 +67,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.more) {
             System.out.println("setting");
-        } else if(item.getItemId() == R.id.About_us) {
+        } else if (item.getItemId() == R.id.About_us) {
             System.out.println("about us");
-        }else{
-            System.out.println("error");
+        } else {
             return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public void changeToFragment(int itemId) {
+        navController.navigate(itemId);
     }
 }

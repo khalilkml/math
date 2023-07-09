@@ -47,7 +47,7 @@ public class TaskManager {
                 null,
                 null,
                 null,
-                TaskContract.TaskEntry.COLUMN_NAME_TASK + " ASC" // Order tasks by ascending order of their names
+                TaskContract.TaskEntry._ID + " DESC"
         );
         Set<String> tasks = new LinkedHashSet<>(); // Use LinkedHashSet to maintain the order of insertion
         while (cursor.moveToNext()) {

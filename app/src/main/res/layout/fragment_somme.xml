@@ -1,74 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent">
 
-    <!-- To-Do List -->
-    <ListView
-        android:id="@+id/todoList"
-        android:layout_width="match_parent"
-        android:listSelector="@color/purple_200"
-        android:layout_height="560dp"
-        android:clickable="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
-        android:paddingTop="55dp"
-        android:focusable="true" />
-
-    <!-- Add New To-Do -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/new_todo">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_task"
+        <!-- Add New To-Do -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#616161" />
+            android:layout_marginTop="57dp"
+            android:hint="@string/new_todo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#616161" />
 
-    <!-- Add Button -->
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        <!-- To-Do List -->
+
         <!-- Add Button -->
+
+        <ListView
+            android:id="@+id/todoList"
+            android:layout_width="match_parent"
+            android:layout_height="620dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:listSelector="@color/purple_200"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/addButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayout"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginLeft="80dp"
-            android:text="@string/add" />
+            android:text="@string/add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.771"
+            app:layout_constraintStart_toEndOf="@+id/remove"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976" />
 
         <Button
             android:id="@+id/remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginLeft="30dp"
-            android:text="@string/remove" />
+            android:layout_marginStart="16dp"
+            android:text="@string/remove"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.225"
+            app:layout_constraintStart_toEndOf="@+id/change"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.979" />
+
         <Button
             android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginLeft="20dp"
-            android:text="@string/change" />
-    </LinearLayout>
+            android:text="@string/change"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976" />
 
-    <TextView
-        android:id="@+id/star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/starte" />
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

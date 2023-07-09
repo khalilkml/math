@@ -9,7 +9,11 @@
         android:id="@+id/home"
         android:name="com.example.math.Home"
         android:label="@string/USER_INFORMATIONS"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home_to_somme"
+            app:destination="@id/somme" />
+    </fragment>
     <fragment
         android:id="@+id/division"
         android:name="com.example.math.Devision"
@@ -29,7 +33,11 @@
         android:id="@+id/somme"
         android:name="com.example.math.Somme"
         android:label="@string/SOMME"
-        tools:layout="@layout/fragment_somme" />
+        tools:layout="@layout/fragment_somme" >
+        <action
+            android:id="@+id/action_somme_to_home"
+            app:destination="@id/home" />
+    </fragment>
     <fragment
         android:id="@+id/soustraction"
         android:name="com.example.math.Soustraction"

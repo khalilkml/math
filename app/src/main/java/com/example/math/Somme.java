@@ -1,12 +1,12 @@
 package com.example.math;
 
-import android.content.DialogInterface;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation;
+
+
 
 public class Somme extends Fragment {
 
@@ -36,6 +40,7 @@ public class Somme extends Fragment {
         return inflater.inflate(R.layout.fragment_somme, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,112 +51,136 @@ public class Somme extends Fragment {
         Button remove = view.findViewById(R.id.remove);
         Button change = view.findViewById(R.id.change);
         ListView taskList = view.findViewById(R.id.todoList);
-        ArrayAdapter adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, new ArrayList<>(taskManager.getTasks()));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, new ArrayList<>(taskManager.getTasks()));
         taskList.setAdapter(adapter);
 
         // Set up click listener for "Add" button
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        addButton.setOnClickListener(v -> {
+            // Create a dialog to choose an option
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Choose an Option");
+
+            // Set the single-choice options
+            String[] singleChoiceOptions = {"Option 1", "Option 2", "Option 3", "Option 4"};
+            final int[] checkedItem = {0}; // Default checked item
+
+            builder.setSingleChoiceItems(singleChoiceOptions, checkedItem[0], (dialog, which) -> {
+                // Handle option selection
+                checkedItem[0] = which; // Update the checked item index
+            });
+
+            // Set the positive button action to add the task
+            builder.setPositiveButton("Add", (dialog, which) -> {
                 String task = taskInput.getText().toString().trim();
 
                 if (!task.isEmpty()) {
-                    //Returning the task from the editetext
+                    // Process the selected option
+                    String selectedOption = singleChoiceOptions[checkedItem[0]];
+                    Log.d("Selected Option", selectedOption);
+
+                    // Add the task to the list and perform other actions
                     taskManager.addTask(task);
-                    //Prepare to update the list of tasks
                     adapter.clear();
-                    //Update task list
                     adapter.addAll(taskManager.getTasks());
-                    //Clear the taskinput
                     taskInput.setText("");
+
                     Log.d("Somme Fragment", "Added task: " + task);
                 }
-            }
+            });
+
+            // Set the negative button action to cancel the dialog
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+            // Show the dialog
+            builder.show();
         });
+
         taskList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // Add a listener to the Remove button
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = taskList.getCheckedItemPosition();
-                if (position != ListView.INVALID_POSITION) {
-                    String task = (String) taskList.getItemAtPosition(position);
-                    taskManager.removeTask(task);
-                    Log.d("TaskManager", "Selected task: " + task);
+        remove.setOnClickListener(v -> {
+            int position = taskList.getCheckedItemPosition();
+            if (position != ListView.INVALID_POSITION) {
+                String task = (String) taskList.getItemAtPosition(position);
+                taskManager.removeTask(task);
+                Log.d("TaskManager", "Selected task: " + task);
+                adapter.remove(task);
+                taskList.clearChoices();
+            } else {
+                System.out.println("not");
+            }
+        });
+
+        change.setOnClickListener(v -> {
+            int position = taskList.getCheckedItemPosition();
+            if (position != ListView.INVALID_POSITION) {
+                String task = (String) taskList.getItemAtPosition(position);
+
+                // Create a dialog to get the new task name and select an option
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Change Task");
+
+                // Add a text input to the dialog
+                final EditText input = new EditText(getActivity());
+                input.setText(task);
+                builder.setView(input);
+
+                // Set the single-choice options
+                String[] singleChoiceOptions = {"important and urgent ", "important but not urgent", "not important but urgent", "not important and not urgent"};
+                final int[] checkedItem = {0}; // Default checked item
+
+                builder.setSingleChoiceItems(singleChoiceOptions, checkedItem[0], (dialog, which) -> {
+                    // Handle option selection
+                    checkedItem[0] = which; // Update the checked item index
+                });
+
+                // Set the positive button action to change the task
+                builder.setPositiveButton("Change", (dialog, which) -> {
+                    String newTask = input.getText().toString();
+                    taskManager.changeTask(task, newTask);
                     adapter.remove(task);
-                    taskList.clearChoices();
-                } else {
-                    System.out.println("not");
-                }
+                    adapter.insert(newTask, position);
+                    taskList.setItemChecked(position, false);
+                    taskList.setItemChecked(adapter.getPosition(newTask), true);
+
+                    // Process the selected option
+                    String selectedOption = singleChoiceOptions[checkedItem[0]];
+                    Log.d("Selected Option", selectedOption);
+                });
+
+                // Set the negative button action to cancel the dialog
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+                // Show the dialog
+                builder.show();
+            } else {
+                // No item is selected in the list
+                Toast.makeText(getActivity(), "Please select a task to change", Toast.LENGTH_SHORT).show();
             }
         });
 
-        change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = taskList.getCheckedItemPosition();
-                if (position != ListView.INVALID_POSITION) {
-                    String task = (String) taskList.getItemAtPosition(position);
 
-                    // Create a dialog to get the new task name
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Change Task");
 
-                    // Add a text input to the dialog
-                    final EditText input = new EditText(getActivity());
-                    input.setText(task);
-                    builder.setView(input);
-
-                    // Set the positive button action to change the task
-                    builder.setPositiveButton("Change", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String newTask = input.getText().toString();
-                            taskManager.changeTask(task, newTask);
-                            adapter.remove(task);
-                            adapter.insert(newTask, position);
-                            taskList.setItemChecked(position, false);
-                            taskList.setItemChecked(adapter.getPosition(newTask), true);
-                        }
-                    });
-
-                    // Set the negative button action to cancel the dialog
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    // Show the dialog
-                    builder.show();
-                } else {
-                    // No item is selected in the list
-                    Toast.makeText(getActivity(), "Please select a task to change", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         // Add a listener to the ListView
-        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                taskList.setItemChecked(position, true);
-            }
+        taskList.setOnItemClickListener((parent, view1, position, id) -> {
+            taskList.setItemChecked(position, true);
+            // Show the button
+            remove.setVisibility(View.VISIBLE);
+            change.setVisibility(View.VISIBLE);
+            // Apply animations (e.g., slide up animation)
+            Animation slideUp = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up);
+            remove.startAnimation(slideUp);
+            change.startAnimation(slideUp);
+        });
+        taskList.setOnTouchListener((v, event) -> {
+            // Clear item selection when touching outside the list
+            taskList.clearChoices();
+            remove.setVisibility(View.GONE);
+            change.setVisibility(View.GONE);
+            return false;
         });
 
 
-        // Set up long click listener for list items to delete tasks
-        /*taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String task = (String) parent.getItemAtPosition(position);
-                taskManager.removeTask(task);
-                adapter.clear();
-                adapter.addAll(taskManager.getTasks());
-                return true;
-            }
-        });*/
     }
 }
