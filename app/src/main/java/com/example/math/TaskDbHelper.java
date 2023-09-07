@@ -8,10 +8,12 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "tasks.db";
 
+    // Define the SQL statement to create the table with the new column
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
                     TaskContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
-                    TaskContract.TaskEntry.COLUMN_NAME_TASK + " TEXT)";
+                    TaskContract.TaskEntry.COLUMN_NAME_TASK + " TEXT," +
+                    TaskContract.TaskEntry.COLUMN_SELECTED_OPTION + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TaskContract.TaskEntry.TABLE_NAME;
@@ -29,3 +31,4 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
+

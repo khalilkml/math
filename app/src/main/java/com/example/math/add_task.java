@@ -23,7 +23,7 @@ import android.view.animation.Animation;
 
 
 
-public class Somme extends Fragment {
+public class add_task extends Fragment {
 
 
     public TaskManager taskManager;
@@ -37,7 +37,7 @@ public class Somme extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_somme, container, false);
+        return inflater.inflate(R.layout.fragment_add_task, container, false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -61,7 +61,7 @@ public class Somme extends Fragment {
             builder.setTitle("Choose an Option");
 
             // Set the single-choice options
-            String[] singleChoiceOptions = {"Option 1", "Option 2", "Option 3", "Option 4"};
+            String[] singleChoiceOptions = {"important and urgent", "important but not urgent", "not important but urgent", "not important and not urgent"};
             final int[] checkedItem = {0}; // Default checked item
 
             builder.setSingleChoiceItems(singleChoiceOptions, checkedItem[0], (dialog, which) -> {
@@ -78,8 +78,8 @@ public class Somme extends Fragment {
                     String selectedOption = singleChoiceOptions[checkedItem[0]];
                     Log.d("Selected Option", selectedOption);
 
-                    // Add the task to the list and perform other actions
-                    taskManager.addTask(task);
+                    // Add the task with the selected option
+                    taskManager.addTask(task, selectedOption);
                     adapter.clear();
                     adapter.addAll(taskManager.getTasks());
                     taskInput.setText("");
@@ -94,6 +94,7 @@ public class Somme extends Fragment {
             // Show the dialog
             builder.show();
         });
+        ;
 
         taskList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -137,16 +138,16 @@ public class Somme extends Fragment {
                 // Set the positive button action to change the task
                 builder.setPositiveButton("Change", (dialog, which) -> {
                     String newTask = input.getText().toString();
-                    taskManager.changeTask(task, newTask);
+                    String selectedOption = singleChoiceOptions[checkedItem[0]]; // Get the selected option
+                    taskManager.changeTask(task, newTask, selectedOption); // Pass all three arguments
                     adapter.remove(task);
                     adapter.insert(newTask, position);
                     taskList.setItemChecked(position, false);
                     taskList.setItemChecked(adapter.getPosition(newTask), true);
 
-                    // Process the selected option
-                    String selectedOption = singleChoiceOptions[checkedItem[0]];
                     Log.d("Selected Option", selectedOption);
                 });
+
 
                 // Set the negative button action to cancel the dialog
                 builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());

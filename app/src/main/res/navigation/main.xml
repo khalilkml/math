@@ -14,48 +14,35 @@
             android:id="@+id/action_home_to_somme"
             app:destination="@id/somme" />
     </fragment>
-    <fragment
-        android:id="@+id/division"
-        android:name="com.example.math.Devision"
-        android:label="DEVISION"
-        tools:layout="@layout/fragment_devision" />
-    <fragment
-        android:id="@+id/fois"
-        android:name="com.example.math.Fois"
-        android:label="@string/Fois"
-        tools:layout="@layout/fragment_fois" />
+
     <fragment
         android:id="@+id/setting"
         android:name="com.example.math.setting"
         android:label="@string/SETTINGS"
         tools:layout="@layout/fragment_settings" />
     <fragment
+        android:id="@+id/tasks_group"
+        android:name="com.example.math.tasks_group"
+        android:label="@string/tasks_group"
+        tools:layout="@layout/fragment_tasks_group" />
+    <fragment
         android:id="@+id/somme"
-        android:name="com.example.math.Somme"
+        android:name="com.example.math.add_task"
         android:label="@string/SOMME"
-        tools:layout="@layout/fragment_somme" >
+        tools:layout="@layout/fragment_add_task" >
         <action
             android:id="@+id/action_somme_to_home"
             app:destination="@id/home" />
     </fragment>
     <fragment
         android:id="@+id/soustraction"
-        android:name="com.example.math.Soustraction"
+        android:name="com.example.math.user_info"
         android:label="@string/SOUSTRACTION"
-        tools:layout="@layout/fragment_soustraction" />
+        tools:layout="@layout/fragment_user_info" />
     <fragment
         android:id="@+id/cantact"
         android:name="com.example.math.contact_us"
         android:label="@string/CANTACT_US"
         tools:layout="@layout/fragment_contact_us" />
-    <fragment
-        android:id="@+id/egale"
-        android:name="com.example.math.egale_ou_deferent"
-        android:label="@string/EGALE_OU_DEFERENT"
-        tools:layout="@layout/fragment_egale_ou_deferent" />
-    <fragment
-        android:id="@+id/plus_ou_moine"
-        android:name="com.example.math.superieur_ou_inferieur"
-        android:label="@string/SUPERIEUR_OU_INFERIEUR"
-        tools:layout="@layout/fragment_superieur_ou_inferieur" />
+
 </navigation>

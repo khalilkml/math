@@ -18,19 +18,19 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
-public class Soustraction extends Fragment {
+public class  user_info extends Fragment {
     TextView full_name ;
     TextView emaile ;
     TextView password ;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public Soustraction() {
+    public user_info() {
         // Required empty public constructor
     }
 
 
-    public static Soustraction newInstance(String param1, String param2) {
-        Soustraction fragment = new Soustraction();
+    public static user_info newInstance(String param1, String param2) {
+        user_info fragment = new user_info();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -47,7 +47,7 @@ public class Soustraction extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_soustraction, container, false);
+        return inflater.inflate(R.layout.fragment_user_info, container, false);
     }
 
     @Override
