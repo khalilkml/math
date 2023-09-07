@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class TaskManager {
 
@@ -19,14 +17,16 @@ public class TaskManager {
         dbHelper = new TaskDbHelper(context);
     }
 
-    public void addTask(String task, String selectedOption) {
+    public void addTask(String task, String selectedOption, String taskNote) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TASK, task);
-        values.put(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION, selectedOption); // Add selected option
+        values.put(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION, selectedOption);
+        values.put(TaskContract.TaskEntry.COLUMN_TASK_NOTE, taskNote); // Add task note
         db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
         Log.d("TaskManager", "Added task: " + task + ", Selected option: " + selectedOption);
     }
+
 
     public void removeTask(String task) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -35,9 +35,15 @@ public class TaskManager {
         db.delete(TaskContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
     }
 
-    public Set<String> getTasks() {
+
+    public List<Task> getTasks() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] projection = {TaskContract.TaskEntry.COLUMN_NAME_TASK};
+        String[] projection = {
+                TaskContract.TaskEntry.COLUMN_NAME_TASK,
+                TaskContract.TaskEntry.COLUMN_SELECTED_OPTION, // Include selected option if needed
+                TaskContract.TaskEntry.COLUMN_TASK_NOTE // Include task notes column
+        };
+
         Cursor cursor = db.query(
                 TaskContract.TaskEntry.TABLE_NAME,
                 projection,
@@ -47,28 +53,40 @@ public class TaskManager {
                 null,
                 TaskContract.TaskEntry._ID + " DESC"
         );
-        Set<String> tasks = new LinkedHashSet<>(); // Use LinkedHashSet to maintain the order of insertion
+
+        List<Task> tasks = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String task = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
+            String taskName = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
+            String selectedOption = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION)); // Include if needed
+            String taskNotes = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_TASK_NOTE)); // Retrieve task notes
+
+            Task task = new Task(taskName, selectedOption, taskNotes); // Update Task class constructor accordingly
             tasks.add(task);
         }
         cursor.close();
         return tasks;
     }
 
-    public void changeTask(String oldTask, String newTask, String selectedOption) {
+
+    public void changeTask(String oldTask, String newTask, String selectedOption, String newTaskNotes) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TASK, newTask);
         values.put(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION, selectedOption); // Update selected option
+        values.put(TaskContract.TaskEntry.COLUMN_TASK_NOTE, newTaskNotes); // Update task notes
         String selection = TaskContract.TaskEntry.COLUMN_NAME_TASK + " = ?";
         String[] selectionArgs = {oldTask};
         db.update(TaskContract.TaskEntry.TABLE_NAME, values, selection, selectionArgs);
     }
 
-    public Set<String> getTasksWithOption(String option) {
+
+    public List<Task> getTasksWithOption(String option) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] projection = {TaskContract.TaskEntry.COLUMN_NAME_TASK};
+        String[] projection = {
+                TaskContract.TaskEntry.COLUMN_NAME_TASK,
+                TaskContract.TaskEntry.COLUMN_SELECTED_OPTION,
+                TaskContract.TaskEntry.COLUMN_TASK_NOTE // Include task notes in projection
+        };
         String selection = TaskContract.TaskEntry.COLUMN_SELECTED_OPTION + " = ?";
         String[] selectionArgs = {option};
         Cursor cursor = db.query(
@@ -80,9 +98,13 @@ public class TaskManager {
                 null,
                 TaskContract.TaskEntry._ID + " DESC"
         );
-        Set<String> tasks = new LinkedHashSet<>(); // Use LinkedHashSet to maintain the order of insertion
+        List<Task> tasks = new ArrayList<>(); // Use ArrayList to store Task objects
         while (cursor.moveToNext()) {
-            String task = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
+            String taskTitle = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
+            String selectedOption = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION));
+            String taskNotes = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_TASK_NOTE));
+
+            Task task = new Task(taskTitle, selectedOption, taskNotes); // Create a Task object with title, option, and notes
             tasks.add(task);
         }
         cursor.close();
@@ -90,8 +112,9 @@ public class TaskManager {
         return tasks;
     }
 
+
     public boolean hasTasksWithOption(String option) {
-        Set<String> tasks = getTasksWithOption(option);
+        List<Task> tasks = getTasksWithOption(option);
         boolean hasData = !tasks.isEmpty();
         return hasData;
     }
@@ -100,7 +123,8 @@ public class TaskManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] projection = {
                 TaskContract.TaskEntry.COLUMN_NAME_TASK,
-                TaskContract.TaskEntry.COLUMN_SELECTED_OPTION
+                TaskContract.TaskEntry.COLUMN_SELECTED_OPTION,
+                TaskContract.TaskEntry.COLUMN_TASK_NOTE // Include task notes in projection
         };
         Cursor cursor = db.query(
                 TaskContract.TaskEntry.TABLE_NAME,
@@ -117,15 +141,13 @@ public class TaskManager {
         while (cursor.moveToNext()) {
             String task = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
             String selectedOption = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION));
-            Task newTask = new Task(task, selectedOption);
+            String taskNotes = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_TASK_NOTE));
+
+            Task newTask = new Task(task, selectedOption, taskNotes);
             tasks.add(newTask);
         }
-
         cursor.close();
         return tasks;
     }
-
-
-
 }
 

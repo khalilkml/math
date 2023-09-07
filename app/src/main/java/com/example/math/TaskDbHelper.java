@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class TaskDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "tasks.db";
 
     // Define the SQL statement to create the table with the new column
@@ -13,7 +13,8 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
                     TaskContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
                     TaskContract.TaskEntry.COLUMN_NAME_TASK + " TEXT," +
-                    TaskContract.TaskEntry.COLUMN_SELECTED_OPTION + " TEXT)";
+                    TaskContract.TaskEntry.COLUMN_SELECTED_OPTION + " TEXT," +
+                    TaskContract.TaskEntry.COLUMN_TASK_NOTE + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TaskContract.TaskEntry.TABLE_NAME;

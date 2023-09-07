@@ -1,19 +1,16 @@
 package com.example.math;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 public class tasks_group extends Fragment {
 
@@ -39,13 +36,14 @@ public class tasks_group extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tasks_group, container, false);
     }
-    @Override
+
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ListView taskListView = view.findViewById(R.id.divisionTaskList);
 
-        Set<String> tasks = taskManager.getTasksWithOption("important and urgent");
+        List<Task> tasks = taskManager.getTasksWithOption("important and urgent");
         boolean hasData = taskManager.hasTasksWithOption("important and urgent");
         if (hasData) {
             Toast.makeText(requireContext(), "Data is available", Toast.LENGTH_SHORT).show();
@@ -53,8 +51,9 @@ public class tasks_group extends Fragment {
             Toast.makeText(requireContext(), "No data available", Toast.LENGTH_SHORT).show();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, new ArrayList<>(tasks));
+        TaskAdapter adapter = new TaskAdapter(requireContext(), tasks);
         taskListView.setAdapter(adapter);
     }
+
 
 }

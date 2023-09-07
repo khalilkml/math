@@ -63,4 +63,5 @@
     <string name="change">change</string>
     <string name="tasks_group">tasks_group</string>
     <string name="add_task">add task</string>
+    <string name="task_notes">Task Notes</string>
 </resources>
