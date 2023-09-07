@@ -10,22 +10,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Home extends Fragment {
 
-    ImageView my_organizer;
+    private RecyclerView cardRecyclerView;
+    private CardAdapter cardAdapter;
+    private TaskManager taskManager;
 
-    ImageView profile;
-
-
-    Button but2;
+    // ... Other view references and variables
 
     public Home() {
     }
@@ -38,6 +41,7 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        taskManager = new TaskManager(requireContext());
     }
 
     @Override
@@ -49,20 +53,16 @@ public class Home extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        my_organizer = view.findViewById(R.id.my_organizer);
-        profile = view.findViewById(R.id.thinking2);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
+        cardRecyclerView = view.findViewById(R.id.cardRecyclerView);
+        cardAdapter = new CardAdapter();
+        cardRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        cardRecyclerView.setAdapter(cardAdapter);
 
+        // Load tasks from the SQLite database
+        List<Task> tasks = taskManager.getAllTasks();
 
-        my_organizer.setOnClickListener(view1 -> {
-            // Call the switchFragment function
-            mainActivity.changeToFragment(R.id.somme);
-        });
-
-        profile.setOnClickListener(view1 -> {
-            mainActivity.changeToFragment(R.id.soustraction);
-        });
-
+        // Add tasks to the card adapter
+        cardAdapter.setTasks(tasks);
     }
 }

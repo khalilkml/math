@@ -62,4 +62,5 @@
     <string name="remove">remove</string>
     <string name="change">change</string>
     <string name="tasks_group">tasks_group</string>
+    <string name="add_task">add task</string>
 </resources>

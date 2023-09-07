@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TaskManager {
@@ -93,5 +95,37 @@ public class TaskManager {
         boolean hasData = !tasks.isEmpty();
         return hasData;
     }
+
+    public List<Task> getAllTasks() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] projection = {
+                TaskContract.TaskEntry.COLUMN_NAME_TASK,
+                TaskContract.TaskEntry.COLUMN_SELECTED_OPTION
+        };
+        Cursor cursor = db.query(
+                TaskContract.TaskEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                TaskContract.TaskEntry._ID + " DESC"
+        );
+
+        List<Task> tasks = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            String task = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TASK));
+            String selectedOption = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_SELECTED_OPTION));
+            Task newTask = new Task(task, selectedOption);
+            tasks.add(newTask);
+        }
+
+        cursor.close();
+        return tasks;
+    }
+
+
+
 }
 
