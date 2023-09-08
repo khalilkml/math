@@ -12,24 +12,21 @@
         <group
             android:id="@+id/operation">
             <item
-                android:id="@+id/somme"
-                android:icon="@drawable/pluse"
-                android:title="@string/somme"/>
-            <item
                 android:id="@+id/tasks_group"
+                android:icon="@drawable/ic_table_black_24"
                 android:title="@string/tasks_group"/>
             <item
                 android:id="@+id/soustraction"
-                android:icon="@drawable/soustraction"
-                android:title="@string/soustraction"/>
+                android:icon="@drawable/ic_person_24"
+                android:title="@string/user_info"/>
         </group>
         <group
             android:id="@+id/group2"
             android:checkableBehavior="single">
             <item
                 android:id="@+id/cantact"
-                android:icon="@drawable/cantact_us"
-                android:title="@string/contact_us"/>
+                android:icon="@drawable/baseline_contact_support_24"
+                android:title="@string/contact_support"/>
             <item
                 android:id="@+id/setting"
                 android:icon="@drawable/ic_settings_24"

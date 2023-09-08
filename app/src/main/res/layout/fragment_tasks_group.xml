@@ -8,6 +8,7 @@
     <ListView
         android:id="@+id/divisionTaskList"
         android:layout_width="match_parent"
+        android:layout_marginTop="49dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:divider="@android:color/darker_gray"

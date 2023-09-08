@@ -5,20 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -64,5 +56,24 @@ public class Home extends Fragment {
 
         // Add tasks to the card adapter
         cardAdapter.setTasks(tasks);
+
+        Button AddNewTask;
+
+        AddNewTask = view.findViewById(R.id.add_new_task);
+//        profile = view.findViewById(R.id.thinking2);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+
+        AddNewTask.setOnClickListener(view1 -> {
+            // Call the switchFragment function
+            mainActivity.changeToFragment(R.id.somme);
+        });
+
+//        profile.setOnClickListener(view1 -> {
+//            mainActivity.changeToFragment(R.id.soustraction);
+//        });
+
+
     }
 }
